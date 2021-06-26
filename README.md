@@ -12,7 +12,7 @@ The Dataset Contains 50 Mixed Images from Car,Two Wheelers and Posters.
 Some images don't need ROI filterings but some images have a lot background for which it need ROI filtering (Mostly The Number Plates From Two Wheelers)
 Here is the reference
 
-![Need ROI Filtering](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/asset/Screenshot_16.png)
+![Need ROI Filtering](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/assets/Screenshot_16.png)
 
 For that purpose i applied applied Warped Planar Object Detection Network .WPOD-NET searches for License Plates and
 regresses one affine transformation for detection detection, allowing a rectification of the LP area to a rectangle resembling a frontal view
@@ -23,7 +23,7 @@ weights/wpod_net_update1.h5
 </pre>
 # Results for ROI segmentation 
 
-![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/asset/Screenshot_17.png)
+![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/assets/Screenshot_17.png)
 
 Have then applied opencv customised thresholding,Connected Components,contour detection and selection . 
 <pre>
@@ -33,7 +33,7 @@ scripts/Character-segmentation-Contours.py
 scripts/deblur.py
 scripts/transform.py
 </pre>
-![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/asset/masked_samples.png)
+![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/assets/masked_samples.png)
 
 Since Dataset is mixed so it became harder for these naive methods to generalize .The extension to this can be applying KNN models to characterise similar characters into a bucket and then assigning the value of the character based on the best image. Since the data was less so scope became less to propogate this way.
 
@@ -45,10 +45,10 @@ Hence *Applied KerasOCR* for Character Detection and using Wraped Perspective Tr
 
 Here is how results are
 
-![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/asset/Screenshot_8.png)
-![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/asset/Screenshot_9.png)
-![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/asset/Screenshot_10.png)
-![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/asset/Screenshot_11.png)
+![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/assets/Screenshot_8.png)
+![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/assets/Screenshot_9.png)
+![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/assets/Screenshot_10.png)
+![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/assets/Screenshot_11.png)
 
 
 KerasOCR is a highspeed ocr . Which produced good result interms of Text/Character Detection but results were not sufficient for Recognition so i employed Tesseract For Final Recognition. 
@@ -59,19 +59,19 @@ image-->kerasOCR-->Denoising-->Upscaling(Interpolation)-->Debluring-->Tesseract-
 scripts/Main.ipynb
 </pre>
 
-![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/asset/Screenshot_1.png)
+![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/assets/Screenshot_1.png)
 
-![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/asset/Screenshot_2.png)
+![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/assets/Screenshot_2.png)
 
-![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/asset/Screenshot_3.png)
+![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/assets/Screenshot_3.png)
 
-![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/asset/Screenshot_4.png)
+![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/assets/Screenshot_4.png)
 
-![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/asset/Screenshot_5.png)
+![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/assets/Screenshot_5.png)
 
-![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/asset/Screenshot_6.png)
+![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/assets/Screenshot_6.png)
 
-![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/asset/Screenshot_7.png)
+![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/assets/Screenshot_7.png)
 
 
 Have Wroted The Results Back In CSV
@@ -85,8 +85,8 @@ I have found out that in some samples our approch is sometimes predicting Last 4
 Samples:
 
 
-![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/asset/Screenshot_12.png)
-![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/asset/Screenshot_13.png)
+![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/assets/Screenshot_12.png)
+![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/assets/Screenshot_13.png)
 
 Have trained my_model.h5 on this data 
 <pre>scripts/digit_recognition_svhn.ipynb
@@ -95,4 +95,4 @@ weights/my_model.h5
 
 Here are the supporting results
 
-![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/asset/Screenshot_15.png)
+![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/assets/Screenshot_15.png)
