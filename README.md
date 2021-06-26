@@ -1,99 +1,104 @@
-# CharacterSegmentationAndRecognition
+# Character Segmentation And Recognition
 
-Main Approch As Follows
-1) Input Image
-2) Text/Character Segmentation 
-3) Denoising and Upscaling with interpolation
-4) Character Recognition
-5) Added to CSV
+## Approach Workflow:
+1. Image(Input)
+2. Text/Character Segmentation
+3. Denoising and Upscaling with Interpolation
+4. Character Recognition
+5. Saving to csv
+
 
 # Solution
-The Dataset Contains 50 Mixed Images from Car,Two Wheelers and Posters. 
-Some images don't need ROI filterings but some images have a lot background for which it need ROI filtering (Mostly The Number Plates From Two Wheelers)
-Here is the reference
+* The Dataset Contains 50 Mixed Images from Car,Two Wheelers and Posters. 
+* On first look, most of the images don't need ROI filterings but after analysis, significant number of two wheeler images with a lot of background noise were found for which they need ROI filtering.
 
-![Need ROI Filtering](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/assets/Screenshot_16.png)
+## Applying ROI Filtering 
+* ![Need ROI Filtering](assets/Screenshot_16.png)
 
-For that purpose i applied applied Warped Planar Object Detection Network .WPOD-NET searches for License Plates and
+* For ROI Filtering, Warped Planar Object Detection Network was applied. WPOD-NET searches for License Plates and
 regresses one affine transformation for detection detection, allowing a rectification of the LP area to a rectangle resembling a frontal view
-<pre>
-scripts/Wpod_net_detection_Contour_segmentation.py
-scripts/lpdr.py
-weights/wpod_net_update1.h5
-</pre>
-# Results for ROI segmentation 
 
-![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/assets/Screenshot_17.png)
+* Here you can check the self-customized implementation of [WPOD-NET](scripts/Wpod_net_detection_Contour_segmentation.py) extended on [WPOD-NET Base](scripts/lpdr.py) and [LPDR Pretrained-Weights](weights/wpod_net_update1.h5)
 
-Have then applied opencv customised thresholding,Connected Components,contour detection and selection . 
-<pre>
-scripts/Wpod_net_detection_Contour_segmentation.py
-scripts/glare.py
-scripts/Character-segmentation-Contours.py
-scripts/deblur.py
-scripts/transform.py
-</pre>
-![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/assets/masked_samples.png)
+## Results from ROI Filtering 
 
-Since Dataset is mixed so it became harder for these naive methods to generalize .The extension to this can be applying KNN models to characterise similar characters into a bucket and then assigning the value of the character based on the best image. Since the data was less so scope became less to propogate this way.
+* ![Result](assets/Screenshot_17.png)
 
-# Findings On Dataset
-While doing the explore study in terms of understanding the data distribution correctly including Contrast Adjustment Needs,occlusion,Spatial size for building the accurate approches for recognition. Based on 50 images have concluded that ROI filtering and Text/Character Segmentation can be done by using Text Detectiom
-
-# Final Approch
-Hence *Applied KerasOCR* for Character Detection and using Wraped Perspective Transform for treating the tilt images.
-
-Here is how results are
-
-![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/assets/Screenshot_8.png)
-![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/assets/Screenshot_9.png)
-![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/assets/Screenshot_10.png)
-![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/assets/Screenshot_11.png)
+* On results of ROI Filtering following techniques were applied: 
+    * OpenCV customised thresholding
+    * Connected Components
+    * Contour Detection and Selection.
+    * Debluring
+    * Constrast
+    * Transformation etc.
 
 
-KerasOCR is a highspeed ocr . Which produced good result interms of Text/Character Detection but results were not sufficient for Recognition so i employed Tesseract For Final Recognition. 
 
-I modified the approch and it as follows
-image-->kerasOCR-->Denoising-->Upscaling(Interpolation)-->Debluring-->Tesseract-->Result
-[COLAB](https://colab.research.google.com/drive/1eW9oB2xpZgiK57uFFcMDoLH1hX6YlCIT?usp=sharing)
-<pre>
-scripts/Main.ipynb
-</pre>
+* Mentioned techniques can be observed in following images:
+![Result](assets/masked_samples.png)
 
-![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/assets/Screenshot_1.png)
+Since Dataset was mixed with around 50 samples in total it became harder for these naive methods to generalize. The extension to this is applying KNN models to characterise similar characters into a bucket and then assigning the value of the character based on the best image. Since the data provided was limited, moving into this way and verifying results became out of scope.
 
-![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/assets/Screenshot_2.png)
+**Some new adjustments were made in order for model to work on this diverse and small dataset.**
 
-![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/assets/Screenshot_3.png)
+## Analysis and Findings On Dataset
+* While doing the explore study in terms of understanding the data distribution correctly including Contrast Adjustment Needs,occlusion,Spatial size for building the accurate approches for recognition. 
+* Based on 50 images conclusion was drawn that ROI filtering and Text/Character Segmentation can be done by using Text Detection.
 
-![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/assets/Screenshot_4.png)
+# Final Approach
+* Finally, **Applied KerasOCR** for Character Detection and **Wraped Perspective Transform** for treating the tilt images were used.
 
-![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/assets/Screenshot_5.png)
+* Text Detection after KerasOCR,
 
-![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/assets/Screenshot_6.png)
+    ![Result](/assets/Screenshot_8.png)
+    
+    ![Result](/assets/Screenshot_9.png)
 
-![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/assets/Screenshot_7.png)
+    ![Result](/assets/Screenshot_10.png)
+    
+    ![Result](/assets/Screenshot_11.png)
+
+* After Analysis, KerasOCR's result were amplified by employing Tesseract for Final Recognition.
+
+* Final Steps For Solution
+    * Image
+    * kerasOCR
+    * Denoising
+    * Upscaling(Interpolation)
+    * Debluring
+    * Tesseract
+    * Results
+
+* This whole apporach can be tested here : [Colab Notebook](https://colab.research.google.com/drive/1eW9oB2xpZgiK57uFFcMDoLH1hX6YlCIT?usp=sharing) or [here](scripts/Main.ipynb)
 
 
-Have Wroted The Results Back In CSV
-<pre>
-result.csv
-</pre>
+# [Final Results - Click for CSV](result.csv):
+* ![Result](/assets/Screenshot_1.png)
 
-# Further Improvements
-I have found out that in some samples our approch is sometimes predicting Last 4 numbers in LC as characters because of distortion and low resolution and for the real world data which can be more noiser. So have found out SVHN housing number dataset which has more robust,occluded,low resolution and noisy data samples .Which will be perfect for recognising number
+* ![Result](/assets/Screenshot_2.png)
 
-Samples:
+* ![Result](/assets/Screenshot_3.png)
+
+* ![Result](/assets/Screenshot_4.png)
+
+* ![Result](/assets/Screenshot_5.png)
+
+* ![Result](/assets/Screenshot_6.png)
+
+* ![Result](/assets/Screenshot_7.png)
 
 
-![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/assets/Screenshot_12.png)
-![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/assets/Screenshot_13.png)
+# Further Scope and Improvements
+* In some samples our approch is sometimes predicting Last 4 numbers in LC as characters because of distortion and low resolution and for the real world data which can be more noiser. So have found out SVHN housing number dataset which has more robust,occluded,low resolution and noisy data samples .Which will be perfect for recognising number
 
-Have trained my_model.h5 on this data 
-<pre>scripts/digit_recognition_svhn.ipynb
-weights/my_model.h5
-</pre>
+* Samples:
 
-Here are the supporting results
+* ![Result](/assets/Screenshot_12.png)
 
-![Result](https://github.com/ap1690/CharacterSegmentationAndRecognition/blob/master/assets/Screenshot_15.png)
+* ![Result](/assets/Screenshot_13.png)
+
+
+## Supporting Model and Weights 
+* [Model](scripts/digit_recognition_svhn.ipynb)
+* [Model-Weights](weights/my_model.h5)
+* ![Result](/assets/Screenshot_15.png)
