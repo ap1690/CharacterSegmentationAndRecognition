@@ -55,6 +55,7 @@ KerasOCR is a highspeed ocr . Which produced good result interms of Text/Charact
 
 I modified the approch and it as follows
 image-->kerasOCR-->Denoising-->Upscaling(Interpolation)-->Debluring-->Tesseract-->Result
+[COLAB](https://colab.research.google.com/drive/1eW9oB2xpZgiK57uFFcMDoLH1hX6YlCIT?usp=sharing)
 <pre>
 scripts/Main.ipynb
 </pre>
