@@ -89,7 +89,7 @@ Since Dataset was mixed with around 50 samples in total it became harder for the
 
 
 # Further Scope and Improvements
-* In some samples our approch is sometimes predicting Last 4 numbers in LC as characters because of distortion and low resolution and for the real world data which can be more noiser. So have found out SVHN housing number dataset which has more robust,occluded,low resolution and noisy data samples .Which will be perfect for recognising number
+* In some samples our approch is sometimes predicting Last 4 numbers in LP as characters because of distortion and low resolution and for the real world data which can be more noiser. So have found out SVHN housing number dataset which has more robust,occluded,low resolution and noisy data samples .Which will be perfect for recognising number
 
 * Samples:
 
