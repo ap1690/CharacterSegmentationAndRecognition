@@ -314,13 +314,13 @@ class LPD(metaclass=ArgParser):
                 wpod_net with pre-trained weights
         '''
 
-        json_file = open('wpod_net_update1.json', 'r') 
+        json_file = open('utils/wpod_net_update1.json', 'r') 
         model = model_from_json(json_file.read(), custom_objects={})
         #print("wpod_net/wpod_net_update1.h5")
         import os
         print(os.getcwd())
         #model.load_weights(pkg_resources.resource_filename(__name__, '/'.join(('wpod_net', 'wpod_net_update1.h5'))) if self.net_path is None else '{}.h5'.format(self.net_path)) 
-        model.load_weights('wpod_net_update1.h5')
+        model.load_weights('weights/wpod_net_update1.h5')
         json_file.close()
         return model
         
